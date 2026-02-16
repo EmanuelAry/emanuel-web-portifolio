@@ -1,18 +1,25 @@
-import { defineConfig, globalIgnores } from "eslint/config";
-import nextVitals from "eslint-config-next/core-web-vitals";
-import nextTs from "eslint-config-next/typescript";
+import nextConfig from 'eslint-config-next';
+import tailwindConfig from 'eslint-plugin-tailwindcss';
 
-const eslintConfig = defineConfig([
-  ...nextVitals,
-  ...nextTs,
-  // Override default ignores of eslint-config-next.
-  globalIgnores([
-    // Default ignores of eslint-config-next:
-    ".next/**",
-    "out/**",
-    "build/**",
-    "next-env.d.ts",
-  ]),
-]);
+const eslintConfig = [
+  ...nextConfig,
+  {
+    devIndicators: {
+      appIsrStatus: false,
+    },
+    plugins: {
+      tailwindcss: tailwindConfig,
+    },
+    rules: {
+      ...tailwindConfig.configs.recommended.rules,
+    },
+    settings: {
+      tailwindcss: {
+        config: {},
+        callees: ["classnames", "clsx", "ctl"],
+      },
+    },
+  },
+];
 
 export default eslintConfig;
