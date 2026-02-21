@@ -34,12 +34,12 @@ export default function Home() {
   const [pongIsOpen, setPongIsOpen] = useState(false);
   const [tetrisIsOpen, setTetrisIsOpen] = useState(false);
 
-  const closeProjectsModal = () => setProjectsModalIsOpen(false);
   const closeFigmaModal = () => setFigmaModalIsOpen(false);
   
   const openGithub = () => setGithubModalIsOpen(true);
   const closeGithubModal = () => setGithubModalIsOpen(false);
   const openFigma = () => setFigmaModalIsOpen(true);
+  const closeProjectsModal = () => isMobile? window.open('https://github.com/EmanuelAry', '_blank') : setProjectsModalIsOpen(false);
   const openLinkedIn = () =>
     window.open('https://www.linkedin.com/in/emanuel-oliveira-4010841a2/', '_blank');
 
@@ -67,15 +67,15 @@ export default function Home() {
         }
         >
         <Shortcut image={github} title="Github" action={openGithub} />
-        <Shortcut image={projects} title="Projects" action={openProjects} />
         <Shortcut image={resume} title="Resume" action={openResume} />
         <Shortcut image={linkedin} title="LinkedIn" action={openLinkedIn} />
         <Shortcut image={youtube} title="YouTube" action={openYouTube} />
         <Shortcut image={web} title="Internet" action={openGoogle} />
-        <Shortcut image={figma} title="Figma" action={openFigma} />
 
         {!isMobile && (
           <>
+            <Shortcut image={projects} title="Projects" action={openProjects} />
+            <Shortcut image={figma} title="Figma" action={openFigma} />
             <Shortcut
               image={calcIcon}
               title="Calc"
