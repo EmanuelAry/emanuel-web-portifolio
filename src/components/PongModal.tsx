@@ -1,6 +1,8 @@
 'use client';
 
+import Image from 'next/image';
 import { Rnd } from 'react-rnd';
+import pong from '../assets/icons/Applications/pong.png';
 import {
   type ReactNode,
   useCallback,
@@ -88,7 +90,7 @@ export default function PongModal({ closeModal }: { closeModal: () => void }) {
     ctx.setLineDash([]);
 
     // paddles
-    ctx.fillStyle = '#CCCCCC';
+    ctx.fillStyle = '#C0C4C8';
     ctx.fillRect(8, s.leftY, PADDLE_W, PADDLE_H);
     ctx.fillRect(CANVAS_W - 8 - PADDLE_W, s.rightY, PADDLE_W, PADDLE_H);
 
@@ -106,7 +108,7 @@ export default function PongModal({ closeModal }: { closeModal: () => void }) {
     ctx.fillText(String(s.scoreR), CANVAS_W / 2 + 60, 55);
 
     if (s.winner) {
-      ctx.fillStyle = '#CCCCCC';
+      ctx.fillStyle = '#C0C4C8';
       ctx.font = '28px monospace';
       ctx.fillText(`${s.winner} wins!`, CANVAS_W / 2, CANVAS_H / 2 - 10);
       ctx.font = '16px monospace';
@@ -278,16 +280,16 @@ export default function PongModal({ closeModal }: { closeModal: () => void }) {
         right: '!cursor-colResize',
       }}
     >
-      <div className="flex h-full flex-col border border-gray-400 bg-[#CCCCCC] p-1">
+      <div className="flex h-full flex-col border border-gray-400 bg-[#C0C4C8] p-1">
         {/* Title bar */}
-        <div className="flex h-6 flex-row items-center justify-between gap-1 p-1">
-          <_Square />
-          <_Stripe />
+        <div className="flex h-6 flex-row items-center justify-between bg-[#0000A8] gap-1 p-1">
           <div className="mx-1 flex flex-row items-center gap-1">
-            <span className="text-sm font-bold">Pong</span>
+            <Image src={pong} alt="Pong logo" className="h-4 w-4" />
+            <span className="text-base font-bold text-[#FFF] tracking-widest">Pong</span>
           </div>
-          <_Stripe />
-          <_Close onClick={closeModal} />
+          <div className='flex flex-row items-center gap-1'>
+            <_Close onClick={closeModal} />
+          </div>
         </div>
 
         {/* Game canvas */}
@@ -314,13 +316,9 @@ function _Square({
   return (
     <div
       onClick={onClick}
-      className="h-4 w-4 cursor-pointer border border-t-[#262626] border-l-[#262626] bg-linear-to-br from-[#9A9A9A] to-[#F1F1F1]"
+      className="h-4 w-4 cursor-pointer border border-t-white border-l-white border-b-[#808080] border-r-[#808080] bg-[#C0C0C0] flex items-center justify-center active:border-t-[#808080] active:border-l-[#808080] active:border-b-white active:border-r-white"
     >
-      <div className="h-full border border-[#262626]">
-        <div className="flex h-full flex-col border border-r-[#262626] border-b-[#262626]">
-          {children}
-        </div>
-      </div>
+      {children}
     </div>
   );
 }
@@ -328,22 +326,11 @@ function _Square({
 function _Close({ onClick }: { onClick?: () => void }) {
   return (
     <_Square onClick={onClick}>
-      <div className="relative -left-0.5 flex h-4 w-3 flex-col items-center justify-center gap-0.5">
-        <div className="h-px w-full bg-[#262626]" />
-        <div className="h-px w-full bg-[#262626]" />
+      <div className="relative h-0.5 w-3">
+        <div className="absolute h-0.5 w-full rotate-45 bg-black" />
+        <div className="absolute h-0.5 w-full -rotate-45 bg-black" />
       </div>
     </_Square>
   );
 }
 
-function _Stripe() {
-  return (
-    <div className="flex h-4 grow flex-col justify-evenly bg-[#ddd]">
-      <div className="h-0.5 bg-[#999999]" />
-      <div className="h-0.5 bg-[#999999]" />
-      <div className="h-0.5 bg-[#999999]" />
-      <div className="h-0.5 bg-[#999999]" />
-      <div className="h-0.5 bg-[#999999]" />
-    </div>
-  );
-}

@@ -3,58 +3,58 @@
 import StartMenuModal from '@/components/StartMenuModal';
 import CalculatorModal from '@/components/CalculatorModal';
 import GitHubModal from '@/components/GitHubModal';
+import FigmaModal from '@/components/FigmaModal';
 import PongModal from '@/components/PongModal';
+import TetrisModal from '@/components/TetrisModal';
 import ProjectsModal from '@/components/ProjectsModal';
 import Shortcut from '@/components/Shortcut';
 import Taskbar from '@/components/Taskbar';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import { useRef, useState } from 'react';
 
-import projects from '../assets/shortcuts/apple-folder.png';
+import projects from '../assets/shortcuts/directory_admin_tools.png';
 import figma from '../assets/shortcuts/figma.png';
 import github from '../assets/shortcuts/github.png';
-import web from '../assets/shortcuts/globe.png';
+import web from '../assets/shortcuts/search_web-0.png';
 import linkedin from '../assets/shortcuts/linkedin.png';
-import resume from '../assets/shortcuts/sheet.png';
+import resume from '../assets/shortcuts/resume.png';
 import youtube from '../assets/shortcuts/youtube.png';
 import calcIcon from '../assets/icons/Applications/Calculator.png';
-import pongIcon from '../assets/icons/Applications/Key caps.png';
+import pongIcon from '../assets/icons/Applications/pong.png';
+import tetrisIcon from '../assets/shortcuts/tetris.png';
 
 export default function Home() {
   const ref = useRef<HTMLElement>(null);
   const isMobile = useIsMobile();
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const [projectModalIsOpen, setProjectsModalIsOpen] = useState(false);
   const [githubModalIsOpen, setGithubModalIsOpen] = useState(!isMobile);
+  const [figmaModalIsOpen, setFigmaModalIsOpen] = useState(false);
   const [calcIsOpen, setCalcIsOpen] = useState(false);
-  const [starthubIsOpen, setStartHubIsOpen] = useState(false);
+  const [startMenuIsOpen, setStartMenuIsOpen] = useState(false);
   const [pongIsOpen, setPongIsOpen] = useState(false);
+  const [tetrisIsOpen, setTetrisIsOpen] = useState(false);
 
-  const closeModal = () => setIsOpen(false);
-
+  const closeProjectsModal = () => setProjectsModalIsOpen(false);
+  const closeFigmaModal = () => setFigmaModalIsOpen(false);
+  
   const openGithub = () => setGithubModalIsOpen(true);
   const closeGithubModal = () => setGithubModalIsOpen(false);
-
+  const openFigma = () => setFigmaModalIsOpen(true);
   const openLinkedIn = () =>
     window.open('https://www.linkedin.com/in/emanuel-oliveira-4010841a2/', '_blank');
 
   const openYouTube = () =>
     window.open(
-      'https://www.youtube.com/channel/UCHpt8W_dgXzczsBf9G_rikw',
+      'https://www.youtube.com/@emanuel_ary_dev/featured',
       '_blank',
     );
 
   const openGoogle = () => window.open('https://www.google.com/', '_blank');
 
-  const openProjects = () => setIsOpen(true);
+  const openProjects = () => setProjectsModalIsOpen(true);
 
   const openResume = () =>
-    window.open('/resumes/resume - Henrique Nas - en_US.pdf', '_blank');
-
-  const openFigma = () =>
-    window.open(
-      'https://www.figma.com/file/djqmmAemzIW4fXShqK3sGo/portifolio?node-id=0%3A1&t=ETabTkTERMww8IxT-1',
-      '_blank',
-    );
+    window.open('/resumes/Emanuel Ary de Oliveira - Curriculo.pdf', '_blank');
 
   return (
     <>
@@ -86,8 +86,14 @@ export default function Home() {
               title="Pong"
               action={() => setPongIsOpen(true)}
               />
+            <Shortcut
+              image={tetrisIcon}
+              title="Tetris"
+              action={() => setTetrisIsOpen(true)}
+              />
 
-            {modalIsOpen && <ProjectsModal closeModal={closeModal} />}
+            {projectModalIsOpen && <ProjectsModal closeModal={closeProjectsModal} />}
+            {figmaModalIsOpen && <FigmaModal closeModal={closeFigmaModal} />}
             {githubModalIsOpen && <GitHubModal closeModal={closeGithubModal} />}
             {calcIsOpen && (
               <CalculatorModal closeModal={() => setCalcIsOpen(false)} />
@@ -95,17 +101,17 @@ export default function Home() {
             {pongIsOpen && (
               <PongModal closeModal={() => setPongIsOpen(false)} />
             )}
-            {starthubIsOpen && (
+            {tetrisIsOpen && (
+              <TetrisModal closeModal={() => setTetrisIsOpen(false)} />
+            )}
+            {startMenuIsOpen && (
               <StartMenuModal 
-                closeModal={() => setStartHubIsOpen(false)}
-                isOpen={true}
-                onPrograms={() => console.log('Programs clicked')}
-                onDocuments={() => console.log('Documents clicked')}
-                onSettings={() => console.log('Settings clicked')}
-                onFind={() => console.log('Find clicked')}
-                onHelp={() => console.log('Help clicked')}
-                onRun={() => console.log('Run clicked')}
-                onShutDown={() => console.log('Shut Down clicked')}
+                startMenuOpen={startMenuIsOpen}
+                onCloseStartMenu={() => setStartMenuIsOpen(false)}
+                onOpenCalc={() => setCalcIsOpen(true)}
+                onOpenPong={() => setPongIsOpen(true)}
+                onOpenGithub={() => setGithubModalIsOpen(true)}
+                closeModal={() => setStartMenuIsOpen(false)}
                />
             )}
           </>
@@ -113,11 +119,21 @@ export default function Home() {
       </main>
       {!isMobile && (
         <Taskbar
-          onOpenStartHub={() => setStartHubIsOpen(true)}
-          onCloseStartHub={() => setStartHubIsOpen(false)}
-          onOpenCalc={() => setCalcIsOpen(true)}
-          onOpenPong={() => setPongIsOpen(true)}
-          onOpenGithub={openGithub}
+          startMenuOpen={startMenuIsOpen}
+          isOpenCalc={calcIsOpen}
+          isOpenPong={pongIsOpen}
+          isOpenGithub={githubModalIsOpen}
+          isOpenFigma={figmaModalIsOpen}
+          isOpenProject={projectModalIsOpen}
+          isOpenTetris={tetrisIsOpen}
+          onOpenStartMenu={() => setStartMenuIsOpen(true)}
+          onCloseStartMenu={() => setStartMenuIsOpen(false)}
+          onCloseCalc={()=>setCalcIsOpen(false)}
+          onClosePong={()=>setPongIsOpen(false)}
+          onCloseGitHub={()=>setGithubModalIsOpen(false)}
+          onCloseFigma={()=>setFigmaModalIsOpen(false)}
+          onCloseProject={()=>setProjectsModalIsOpen(false)}
+          onCloseTetris={()=>setTetrisIsOpen(false)}
         />
       )}
     </>

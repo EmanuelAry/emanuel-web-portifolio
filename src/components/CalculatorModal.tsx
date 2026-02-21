@@ -2,7 +2,8 @@
 
 import { Rnd } from 'react-rnd';
 import { ReactNode, useRef, useState } from 'react';
-
+import Image from 'next/image';
+import calc from '../assets/shortcuts/Calculator.png';
 import '../styles/global.css';
 
 const initialSize = {
@@ -116,16 +117,16 @@ export default function CalculatorModal({
         right: '!cursor-colResize',
       }}
     >
-      <div className="flex h-full flex-col border border-gray-400 bg-[#CCCCCC] p-1">
+      <div className="flex h-full flex-col border bg-[#C0C4C8] p-1">
         {/* Title bar */}
-        <div className="flex h-6 flex-row items-center justify-between gap-1 p-1">
-          <_Square />
-          <_Stripe />
+        <div className="flex h-6 flex-row items-center justify-between bg-[#0000A8] gap-1 p-1">
           <div className="mx-1 flex flex-row items-center gap-1">
-            <span className="text-sm font-bold">Calculator</span>
+            <Image src={calc} alt="Calculator Logo" className="h-5 w-5" />
+            <span className="text-base font-bold text-[#FFF] tracking-widest">Calculator</span>
           </div>
-          <_Stripe />
-          <_Close onClick={closeModal} />
+          <div className='flex flex-row items-center gap-1'>
+            <_Close onClick={closeModal} />
+          </div>
         </div>
 
         {/* Display */}
@@ -206,7 +207,7 @@ function _Btn({
         ? active
           ? 'bg-[#666699] text-white hover:bg-[#555588]'
           : 'bg-[#9999CC] hover:bg-[#8888BB]'
-        : 'bg-[#DDDDDD] hover:bg-[#CCCCCC]';
+        : 'bg-[#DDDDDD] hover:bg-[#C0C4C8]';
 
   return (
     <button
@@ -228,13 +229,9 @@ function _Square({
   return (
     <div
       onClick={onClick}
-      className="h-4 w-4 cursor-pointer border border-t-[#262626] border-l-[#262626] bg-linear-to-br from-[#9A9A9A] to-[#F1F1F1]"
+      className="h-4 w-4 cursor-pointer border border-t-white border-l-white border-b-[#808080] border-r-[#808080] bg-[#C0C0C0] flex items-center justify-center active:border-t-[#808080] active:border-l-[#808080] active:border-b-white active:border-r-white"
     >
-      <div className="h-full border border-[#262626]">
-        <div className="flex h-full flex-col border border-r-[#262626] border-b-[#262626]">
-          {children}
-        </div>
-      </div>
+      {children}
     </div>
   );
 }
@@ -242,22 +239,10 @@ function _Square({
 function _Close({ onClick }: { onClick?: () => void }) {
   return (
     <_Square onClick={onClick}>
-      <div className="relative -left-0.5 flex h-4 w-3 flex-col items-center justify-center gap-0.5">
-        <div className="h-px w-full bg-[#262626]" />
-        <div className="h-px w-full bg-[#262626]" />
+      <div className="relative h-0.5 w-3">
+        <div className="absolute h-0.5 w-full rotate-45 bg-black" />
+        <div className="absolute h-0.5 w-full -rotate-45 bg-black" />
       </div>
     </_Square>
-  );
-}
-
-function _Stripe() {
-  return (
-    <div className="flex h-4 grow flex-col justify-evenly bg-[#ddd]">
-      <div className="h-0.5 bg-[#999999]" />
-      <div className="h-0.5 bg-[#999999]" />
-      <div className="h-0.5 bg-[#999999]" />
-      <div className="h-0.5 bg-[#999999]" />
-      <div className="h-0.5 bg-[#999999]" />
-    </div>
   );
 }

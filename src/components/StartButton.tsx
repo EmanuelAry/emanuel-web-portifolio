@@ -13,6 +13,7 @@ export default function StartButton({ onClick }: StartButtonProps) {
 
   return (
     <button
+      id='startButton'
       onClick={onClick}
       onMouseDown={() => setIsPressed(true)}
       onMouseUp={() => setIsPressed(false)}
@@ -29,7 +30,7 @@ export default function StartButton({ onClick }: StartButtonProps) {
         font-bold select-none
       `}
     >
-      <Image src={win95Logo} alt="" width={20} height={20} />
+      <Image id='imgStartButton' src={win95Logo} alt="" width={20} height={20} />
       Start
     </button>
   );

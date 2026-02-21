@@ -5,14 +5,11 @@ import { HTMLAttributes, ReactNode, useEffect, useRef, useState } from 'react';
 
 import StartButton from './StartButton';
 import calcIcon from '../assets/icons/Menu bar/Calculator.png';
-import finderIcon from '../assets/icons/Menu bar/Finder.png';
-import favoritesIcon from '../assets/icons/Menu bar/Favorites.png';
-import recentAppsIcon from '../assets/icons/Menu bar/Recent applications.png';
-import recentDocsIcon from '../assets/icons/Menu bar/Recent documents.png';
-import sherlockIcon from '../assets/icons/Menu bar/Sherlock 2.0.png';
-import keyCapsIcon from '../assets/icons/Menu bar/Key caps.png';
-import scrapbookIcon from '../assets/icons/Menu bar/Scrapbook.png';
-import stickiesIcon from '../assets/icons/Menu bar/Stickies.png';
+import pongIcon from '../assets/icons/Applications/pong.png';
+import tetrisIcon from '../assets/shortcuts/tetris.png';
+import github from '../assets/shortcuts/github.png';
+import figmaico from '../assets/shortcuts/figma.png';
+import projects from '../assets/shortcuts/directory_admin_tools.png';
 
 type _ClassName = HTMLAttributes<HTMLDivElement>['className'];
 
@@ -27,47 +24,56 @@ type MenuItem =
   | 'separator';
 
 export interface TaskBarProps {
-  onOpenStartHub?: () => void;
-  onCloseStartHub?: () => void;
-  onOpenCalc?: ()     => void;
-  onOpenPong?: ()     => void;
-  onOpenGithub?: ()   => void;
+  startMenuOpen: boolean;
+  isOpenCalc: boolean;
+  isOpenPong: boolean;
+  isOpenGithub: boolean;
+  isOpenFigma: boolean;
+  isOpenProject: boolean;
+  isOpenTetris: boolean;
+  onOpenStartMenu?: () => void;
+  onCloseStartMenu?: () => void;
+  onCloseCalc?: () => void;
+  onClosePong?: () => void;
+  onCloseGitHub?: () => void;
+  onCloseFigma?: () => void;
+  onCloseProject?:() => void;
+  onCloseTetris?:() => void;
 }
 
 export default function TaskBar({
-  onOpenStartHub,
-  onCloseStartHub,
-  onOpenCalc,
-  onOpenPong,
-  onOpenGithub,
+  startMenuOpen,
+  isOpenCalc,
+  isOpenPong,
+  isOpenGithub,
+  isOpenFigma,
+  isOpenProject,
+  isOpenTetris,
+  onOpenStartMenu,
+  onCloseStartMenu,
+  onCloseCalc,
+  onClosePong,
+  onCloseGitHub,
+  onCloseFigma,
+  onCloseProject,
+  onCloseTetris,
 }: TaskBarProps) {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
-  const [isStartMenuOpen, setIsStartMenuOpen] = useState(false); // novo estado
+  const [isStartMenuOpen, setIsStartMenuOpen] = useState(startMenuOpen); // novo estado
   const navRef = useRef<HTMLElement>(null);
 
 
   // Handlers sincronizados
   const handleOpenStartMenu = () => {
     setIsStartMenuOpen(true);
-    onOpenStartHub?.();
+    onOpenStartMenu?.();
   };
 
   const handleCloseStartMenu = () => {
     setIsStartMenuOpen(false);
-    onCloseStartHub?.();
+    onCloseStartMenu?.();
   };
-
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (navRef.current && !navRef.current.contains(e.target as Node)) {
-        setOpenMenu(null);
-        if (isStartMenuOpen) handleCloseStartMenu(); 
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [isStartMenuOpen, handleCloseStartMenu]);
 
   function toggleMenu(name: string) {
     setOpenMenu((prev) => (prev === name ? null : name));
@@ -99,89 +105,13 @@ export default function TaskBar({
     closeMenu();
   }
 
-  const utilitiesMenuItems: MenuItem[] = [
-    {
-      label: 'Calculator',
-      icon: calcIcon,
-      action: () => {
-        onOpenCalc?.();
-        closeMenu();
-      },
-    },
-    {
-      label: 'Pong',
-      icon: keyCapsIcon,
-      action: () => {
-        onOpenPong?.();
-        closeMenu();
-      },
-    },
-    {
-      label: 'GitHub',
-      icon: finderIcon,
-      action: () => {
-        onOpenGithub?.();
-        closeMenu();
-      },
-    },
-    'separator',
-    {
-      label: copied ? 'Copied!' : 'Random Password',
-      icon: sherlockIcon,
-      action: handleCopyPassword,
-    },
-  ];
-
-  const aboutMenuItems: MenuItem[] = [
-    {
-      label: 'Developer: Emanuel Ary',
-      icon: stickiesIcon,
-      action: () => {
-        window.open('https://github.com/EmanuelAry', '_blank');
-        closeMenu();
-      },
-    },
-    'separator',
-    {
-      label: 'LinkedIn',
-      icon: favoritesIcon,
-      action: () => {
-        window.open('https://www.linkedin.com/in/emanuel-oliveira-4010841a2/', '_blank');
-        closeMenu();
-      },
-    },
-    {
-      label: 'Source Code on GitHub',
-      icon: scrapbookIcon,
-      action: () => {
-        window.open('https://github.com/HenriqueNas/HenriqueNas-web', '_blank');
-        closeMenu();
-      },
-    },
-    'separator',
-    { label: 'Built with Next.js', disabled: true },
-    { label: 'Version 0.2.0', disabled: true },
-  ];
-
-  const viewMenuItems: MenuItem[] = [
-    { label: 'Show Icons', icon: recentAppsIcon },
-    { label: 'Show Grid', icon: recentDocsIcon, disabled: true },
-    'separator',
-    { label: 'Zoom In', shortcut: '⌘+', disabled: true },
-    { label: 'Zoom Out', shortcut: '⌘-', disabled: true },
-    { label: 'Actual Size', shortcut: '⌘0', disabled: true },
-    'separator',
-    { label: 'Show Toolbar', shortcut: '⌘T', disabled: true },
-    { label: 'Hide Status Bar', disabled: true },
-  ];
-
   return (
     <nav
       ref={navRef}
-      className="relative z-50 flex h-10 w-full items-center border-t border-b-2 border-black border-t-white bg-[#ddd] before:border-b-2 before:border-white"
+      className="relative z-1 flex h-10 w-full items-center border-t border-b-2 border-black border-t-white bg-[#ddd] before:border-b-2 before:border-white"
     >
       <StartButton onClick={() => { 
-          if(isStartMenuOpen){
+          if(startMenuOpen){
             handleCloseStartMenu();
           }else{
             handleOpenStartMenu();
@@ -189,94 +119,86 @@ export default function TaskBar({
           closeMenu(); 
         }
       } />
-      <_TaskBarDropdown
-        label="Utilities"
-        items={utilitiesMenuItems}
-        isOpen={openMenu === 'utilities'}
-        onClick={() => toggleMenu('utilities')}
-        onHover={() => handleHover('utilities')}
-      />
-      <_TaskBarDropdown
-        label="About"
-        items={aboutMenuItems}
-        isOpen={openMenu === 'about'}
-        onClick={() => toggleMenu('about')}
-        onHover={() => handleHover('about')}
-      />
-      <_TaskBarDropdown
-        label="View"
-        items={viewMenuItems}
-        isOpen={openMenu === 'view'}
-        onClick={() => toggleMenu('view')}
-        onHover={() => handleHover('view')}
-      />
+      {isOpenCalc &&(
+        <_TaskBarItens
+          label="Calculadora"
+          icon={calcIcon}
+          onClick={() => onCloseCalc?.()}
+        />
+      )}
+      {isOpenPong && (
+        <_TaskBarItens
+          label="Pong"
+          icon={pongIcon}
+          onClick={() => onClosePong?.()}
+        />
+      )}
+      {isOpenTetris && (
+        <_TaskBarItens
+          label="Tetris"
+          icon={tetrisIcon}
+          onClick={() => onCloseTetris?.()}
+        />
+      )}
+      {isOpenGithub && (
+        <_TaskBarItens
+          label="GitHub"
+          icon={github}
+          onClick={() => onCloseGitHub?.()}
+        />
+      )}
+      {isOpenFigma && (
+        <_TaskBarItens
+          label="Figma"
+          icon={figmaico}
+          onClick={() => onCloseFigma?.()}
+        />
+      )}
+      {isOpenProject && (
+        <_TaskBarItens
+          label="Projects"
+          icon={projects}
+          onClick={() => onCloseProject?.()}
+        />
+      )}
+      
       <TaskBarClock />
     </nav>
   );
 }
 
-function _TaskBarDropdown({
+function _TaskBarItens({
   label,
-  items,
-  isOpen,
+  icon,
   onClick,
-  onHover,
 }: {
   label: string;
-  items: MenuItem[];
-  isOpen: boolean;
+  icon: StaticImageData;
   onClick: () => void;
-  onHover: () => void;
 }) {
+  const [isPressed, setIsPressed] = useState(false);
   return (
-    <div className="relative" onMouseEnter={onHover}>
-      <div
-        onClick={onClick}
-        className={`flex h-6 cursor-pointer items-center justify-center px-2 select-none ${isOpen ? 'bg-[#333399] text-white' : 'hover:bg-[#0000A8] hover:text-white'} `}
-      >
-        {label}
-      </div>
-      {isOpen && (
-        <div className="absolute bottom-full left-0 min-w-50 border border-t-white border-r-[#555] border-b-[#555] border-l-white bg-[#CCCCCC] py-0.5 shadow-[2px_2px_0px_#555]">
-          {items.map((item, i) =>
-            item === 'separator' ? (
-              <div
-                key={`sep-${i}`}
-                className="mx-1 my-0.5 border-t border-b border-t-[#888] border-b-white"
-              />
-            ) : (
-              <div
-                key={item.label}
-                onClick={!item.disabled ? item.action : undefined}
-                className={`flex items-center justify-between gap-4 px-4 py-0.5 ${
-                  item.disabled
-                    ? 'cursor-default text-[#888]'
-                    : 'cursor-default hover:bg-[#333399] hover:text-white'
-                } `}
-              >
-                <span className="flex items-center gap-2">
-                  {item.icon && (
-                    <Image
-                      src={item.icon}
-                      alt=""
-                      width={16}
-                      height={16}
-                      className="inline-block"
-                    />
-                  )}
-                  {item.label}
-                </span>
-                {item.shortcut && (
-                  <span className="text-[0.75em] opacity-70">
-                    {item.shortcut}
-                  </span>
-                )}
-              </div>
-            ),
-          )}
-        </div>
-      )}
-    </div>
+    <button
+      id='startButton'
+      onClick={onClick}
+      onMouseDown={() => setIsPressed(true)}
+      onMouseUp={() => setIsPressed(false)}
+      onMouseLeave={() => setIsPressed(false)}
+      className={`
+        flex items-center gap-2 h-8 px-2 ml-1
+        bg-[#c0c0c0]
+        border-2
+        ${isPressed 
+          ? 'border-t-[#808080] border-l-[#808080] border-b-white border-r-white' 
+          : 'border-t-white border-l-white border-b-[#808080] border-r-[#808080]'
+        }
+        active:border-t-[#808080] active:border-l-[#808080] active:border-b-white active:border-r-white
+        select-none
+      `}
+    >
+      <Image id='imgStartButton' src={icon} alt="" width={25} height={25} />
+      {label}
+    </button>
   );
 }
 
