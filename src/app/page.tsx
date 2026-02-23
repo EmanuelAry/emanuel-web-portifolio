@@ -36,10 +36,10 @@ export default function Home() {
 
   const closeFigmaModal = () => setFigmaModalIsOpen(false);
   
-  const openGithub = () => setGithubModalIsOpen(true);
+  const openGithub = () => isMobile ? window.open('https://github.com/EmanuelAry', '_blank') : setGithubModalIsOpen(true);
   const closeGithubModal = () => setGithubModalIsOpen(false);
   const openFigma = () => setFigmaModalIsOpen(true);
-  const closeProjectsModal = () => isMobile? window.open('https://github.com/EmanuelAry', '_blank') : setProjectsModalIsOpen(false);
+  const closeProjectsModal = () => setProjectsModalIsOpen(false);
   const openLinkedIn = () =>
     window.open('https://www.linkedin.com/in/emanuel-oliveira-4010841a2/', '_blank');
 
