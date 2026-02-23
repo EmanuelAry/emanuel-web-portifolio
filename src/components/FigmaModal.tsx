@@ -2,7 +2,6 @@ import Image from 'next/image';
 import { Rnd } from 'react-rnd';
 
 import { ReactNode, useRef, useState } from 'react';
-import figma from '../assets/shortcuts/figma.png';
 import figmaLogo from '../assets/icons/Applications/Figma-logo.svg'
 
 import '../styles/global.css';
@@ -14,20 +13,20 @@ const initialSize = {
 
 const intro = {
   name: 'Figma',
-  desc: 'Agrupamnto de projetos que realizei para terceiros ou no periodo da faculdade. Alguns participei apenas da prototipação outros pariticipei da prototipação e desenvolvimento.',
+  desc: 'Agrupamento de projetos que realizei para terceiros ou para trabalhos na faculdade. Alguns participei apenas da prototipação outros pariticipei da prototipação e desenvolvimento.',
 };
 
 const figmaFiles = [
   {
     name: 'Wiki IPM',
     description:
-      'Esse protótipo foi realizado o deseenvolvimnto em PHP e está disponivel em "https://wiki.ipm.com.br/". Trata-se de uma wiki de central de informações, reunindo artigos, publicações e duvidas referentes aos processos e produtos da empresa IPM Sistemas',
+      'Esse protótipo foi realizado o desenvolvimnto em PHP e está disponível em "https://wiki.ipm.com.br/". Trata-se de uma wiki de central de informações, reunindo artigos, publicações e dúvidas referêntes aos processos e produtos da empresa IPM Sistemas',
     url: 'https://www.figma.com/design/DijMBM0eTZJexKjoytNA4i/Wiki-IPM?t=oalANrAEiLXRwuOE-0',
     protoipy: 'https://www.figma.com/proto/DijMBM0eTZJexKjoytNA4i/Wiki-IPM?node-id=1-509&t=ETL3P5kUWnnbhsEA-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1'
   },
   {
     name: 'CIZAGUI - Sistema de Agendamento',
-    description: 'Protótipo não implementado. O desenvolvimento desse protótipo foi para a disciplina de requisitos, onde foi realizado todos os processos de levantamento de requisitos e prototipação. A ferramenta Mobile, se propõe a facilitar o gerenciamento de atendimentos, para salões de estética ou clinicas no geral.',
+    description: 'Protótipo não implementado. O desenvolvimento desse protótipo foi para a disciplina de requisitos, onde foi realizado todos os processos de levantamento de requisitos e prototipação. A ferramenta Mobile, se propõe a facilitar o gerenciamento de atendimentos, para salões de estética ou clínicas no geral.',
     url: 'https://www.figma.com/design/qryXpliq7YgJEalsI9wcze/Cizagui?node-id=0-1&p=f&t=oalANrAEiLXRwuOE-0',
     protoipy: 'https://www.figma.com/proto/qryXpliq7YgJEalsI9wcze/Cizagui?node-id=1-2&p=f&t=FuimNsW4jcKueiSj-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=204%3A3'
   },

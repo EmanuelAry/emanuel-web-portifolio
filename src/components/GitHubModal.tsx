@@ -28,7 +28,7 @@ const topRepos = [
   {
     name: 'CaixaEletronico',
     description:
-      'Caixa eletronico para trabalho da disciplina de Testes, funções 100% contempladas com testes unitários, de integração e de sistema com PHPUnit',
+      'Caixa eletrônico para trabalho da disciplina de Testes, funções 100% contempladas com testes unitários, de integração e de sistema com PHPUnit',
     language: 'PHP',
     stars: 1,
     forks: 0,
