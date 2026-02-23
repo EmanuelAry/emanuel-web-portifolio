@@ -17,6 +17,7 @@ import figma from '../assets/shortcuts/figma.png';
 import github from '../assets/shortcuts/github.png';
 import web from '../assets/shortcuts/search_web-0.png';
 import linkedin from '../assets/shortcuts/linkedin.png';
+import cnpq from '../assets/shortcuts/cnpq.png';
 import resume from '../assets/shortcuts/resume.png';
 import youtube from '../assets/shortcuts/youtube.png';
 import calcIcon from '../assets/icons/Applications/Calculator.png';
@@ -50,7 +51,7 @@ export default function Home() {
     );
 
   const openGoogle = () => window.open('https://www.google.com/', '_blank');
-
+  const openCNPQ = () => window.open('https://lattes.cnpq.br/5588781221933541', '_blank')
   const openProjects = () => setProjectsModalIsOpen(true);
 
   const openResume = () =>
@@ -69,6 +70,7 @@ export default function Home() {
         <Shortcut image={github} title="Github" action={openGithub} />
         <Shortcut image={resume} title="Resume" action={openResume} />
         <Shortcut image={linkedin} title="LinkedIn" action={openLinkedIn} />
+        <Shortcut image={cnpq} title="Lattes" action={openCNPQ} />
         <Shortcut image={youtube} title="YouTube" action={openYouTube} />
         <Shortcut image={web} title="Internet" action={openGoogle} />
 
