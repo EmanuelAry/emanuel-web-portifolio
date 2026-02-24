@@ -99,7 +99,7 @@ export default function ProjectsModal({
             alt={`Folder with projects logo`}
             className="h-50"
           />
-          <span>Working in new projects</span>
+          <span>Working on new projects</span>
         </div>
       </div>
     </Rnd>
